@@ -1,14 +1,3 @@
-<<<<<<< HEAD
-var giphyURL = "https://api.giphy.com/v1/gifs/search"
-var apiKey = "8MDlERoDZR0WwoC6kpJoFsZ172PuBJCw"
-
-$.ajax({
-    url: giphyURL +"&q=cars" + "&api_key=" + apiKey,
-    method: "GET"
-}).then(function(response){
-    console.log(response);
-})
-=======
 var giphyURL = "https://api.giphy.com/v1/gifs/search?q=";
 var apiKey = "8MDlERoDZR0WwoC6kpJoFsZ172PuBJCw";
 
@@ -20,18 +9,18 @@ renderButtons();
 $("#addButton").on("click", function () {
     event.preventDefault();
     topic = $("#topic-input").val().trim();
-    $("#topic-input").html("");
     topicsArr.push(topic);
-    console.log(topicsArr);
     renderButtons();
+    $("#topic-input").val("");
+})
+
+$(document).on("click" , ".gif", function(){
+    console.log("click");
 })
 
 $(document).on("click", ".topic-btn", function () {
     queryTopic = $(this).attr("data-name");
-    console.log(queryTopic);
-    console.log()
     var queryURL = giphyURL + queryTopic + "&limit=10&api_key=" + apiKey;
-    console.log(queryURL);
 
     $.ajax({
         url: queryURL,
@@ -39,13 +28,17 @@ $(document).on("click", ".topic-btn", function () {
     }).then(function (response) {
         var topicDiv = $("<div>");
         topicDiv.attr("data-name", queryTopic);
-        console.log(response.data[0].rating);
         for (var i = 0; i < 10; i++) {
             var gifDiv = $("<div>");
             gifDiv.attr( "id" , queryTopic + "-" + i) ;
             var rating = response.data[i].rating;
-            var GIF =  resposne.data[i].url;
-            
+            var GIF = $("<img>");
+            GIF.attr("src" , response.data[i].images.fixed_height.url);
+            GIF.attr("class" , "gif");
+            $("#viewGifs").append(gifDiv);
+            gifDiv.append("<h2> Rated: " + rating + "</h2>");
+            gifDiv.append(GIF);
+            $("#viewGifs").prepend(gifDiv);              
         }
     })
 })
@@ -60,4 +53,3 @@ function renderButtons() {
         $(".buttons").append(topicButton);
     }
 }
->>>>>>> 0f35127855626e42749cef07b7c921fb168e5039
