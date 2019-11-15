@@ -1,4 +1,4 @@
 # GifTastic
 ajax assignment 
 
-jtrupe.github.io/Giftastic
+https://jtrupe.github.io/GifTastic/
